@@ -1,0 +1,112 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://data/sprites/player5.png" type="Texture" id=1]
+[ext_resource path="res://data/sprites/player6.png" type="Texture" id=2]
+[ext_resource path="res://data/sprites/player3.png" type="Texture" id=3]
+[ext_resource path="res://data/sprites/player4.png" type="Texture" id=4]
+[ext_resource path="res://data/sprites/player1.png" type="Texture" id=5]
+[ext_resource path="res://data/sprites/player2.png" type="Texture" id=6]
+[ext_resource path="res://data/sprites/player7.png" type="Texture" id=7]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=8]
+[ext_resource path="res://data/sprites/player9.png" type="Texture" id=9]
+[ext_resource path="res://data/sprites/player8.png" type="Texture" id=10]
+[ext_resource path="res://data/sprites/player10.png" type="Texture" id=11]
+[ext_resource path="res://data/sprites/player_food_overlay.png" type="Texture" id=12]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 7.0
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 10 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "puppy_eyes",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "wag",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "walk",
+"speed": 6.0
+} ]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 6.0
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 8 )
+
+[node name="TerrainCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -7 )
+shape = SubResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -7 )
+frames = SubResource( 1 )
+animation = "idle"
+playing = true
+
+[node name="FoodInMouthSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -7 )
+texture = ExtResource( 12 )
+
+[node name="HumanCollision" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HumanCollision"]
+position = Vector2( 0, -4 )
+shape = SubResource( 3 )
+
+[node name="NomCollision" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NomCollision"]
+position = Vector2( 0, -5 )
+rotation = 1.5708
+shape = SubResource( 6 )
+
+[node name="SightCollision" type="Area2D" parent="."]
+visible = false
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SightCollision"]
+position = Vector2( 0, -7 )
+shape = SubResource( 5 )
+
+[node name="ResumeTimer" type="Timer" parent="."]
+one_shot = true

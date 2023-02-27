@@ -1,0 +1,31 @@
+=== todo ===
+- skip intro
+- remaining food gauge
+- shorter patrol when sus
+- scoring
+  - meh food bite: 100
+  - food grab: 500
+  - food grab like shadow: 2000
+  - food bite: 150
+  - seconds: 50
+
+after intro:
+  - player: 136, -8
+  - human: 190, -8
+
+=== music stuffs ===
+amongst friends
+
+title:
+whipped
+plateau
+mountain man 0 - 0:15
+
+main:
+valentine #1
+valentine #2
+
+run:
+road trip - run!
+rift
+kunio

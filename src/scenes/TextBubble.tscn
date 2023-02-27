@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://data/themes/theme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/TextBubble.gd" type="Script" id=2]
+[ext_resource path="res://data/sprites/speech_bubble_v4.png" type="Texture" id=3]
+[ext_resource path="res://data/sprites/speech_bubble_v5.png" type="Texture" id=4]
+[ext_resource path="res://data/sprites/speech_bubble_v3.png" type="Texture" id=5]
+
+[node name="TextBubble" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -2 )
+texture = ExtResource( 5 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -2 )
+texture = ExtResource( 4 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -2 )
+texture = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -29.0
+margin_top = -15.5
+margin_right = 31.0
+margin_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource( 1 )
+text = "Two lines of
+test string..."
+align = 1
+valign = 2
