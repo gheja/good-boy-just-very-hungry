@@ -1,6 +1,10 @@
-# good-boy-just-very-hungry
+# Good Boy... just very hungry
 
 A game made for the [Nokia 3310 Jam 5](https://itch.io/jam/nokiajam5).
+
+![Title screen](misc/itch_io_cover_image.png)
+
+## About
 
 Controls on keyboard:
   - Arrow keys - move
@@ -18,3 +22,11 @@ Credits:
   - Code, graphics: gheja
 
 The game is made in Godot, using the great template by Trix on the [Nokia 3310 Jam Resources](https://phillipp.itch.io/nokiajamresources)
+
+## Screenshots
+
+![A screenshot of the game](misc/screenshot_2.png)
+
+![A screenshot of the game](misc/screenshot_3.png)
+
+![A screenshot of the game](misc/screenshot_4.png)
