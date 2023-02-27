@@ -6,6 +6,8 @@ A game made for the [Nokia 3310 Jam 5](https://itch.io/jam/nokiajam5).
 
 Play it on itch.io: https://gheja.itch.io/good-boy-just-very-hungry
 
+I made this game over the course of about 4 days, and this is my first real Godot game, it shows on the code, I am aware of it.
+
 ## About
 
 Controls on keyboard:
