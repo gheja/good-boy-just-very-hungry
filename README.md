@@ -1,8 +1,10 @@
 # Good Boy... just very hungry
 
+![Title screen of the game](misc/itch_io_cover_image.png)
+
 A game made for the [Nokia 3310 Jam 5](https://itch.io/jam/nokiajam5).
 
-![Title screen](misc/itch_io_cover_image.png)
+Play it on itch.io: https://gheja.itch.io/good-boy-just-very-hungry
 
 ## About
 
