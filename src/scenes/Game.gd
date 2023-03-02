@@ -201,14 +201,16 @@ func attempt_start():
 	G.ui.attempt_start()
 
 func attempt_evaluate(timed_out = false):
-	var result
-	
 	if G.state != G.STATE_ATTEMPT:
 		return
 	
+	var result
+	var food = Lib.get_first_node_in_group("foods")
+	
 	G.set_state(G.STATE_ATTEMPT_RESULT)
 	
-	add_score(500)
+	
+	### the animation
 	
 	if timed_out:
 		result = 1
@@ -232,15 +234,14 @@ func attempt_evaluate(timed_out = false):
 	G.ui.attempt_run()
 	yield(get_tree().create_timer(1.0), "timeout")
 	
+	
+	### the actual work
+	
 	G.set_state(G.STATE_NORMAL)
-	
-	var food = Lib.get_first_node_in_group("foods")
-	
+	add_score(500)
 	food.queue_free()
-	
-	took_the_food = true
-	
 	G.player.set_food_in_mouth(true)
+	took_the_food = true
 	
 	if result == 1:
 		attempt_fail()
@@ -265,8 +266,6 @@ func attempt_perfect_pass():
 	print("perfect pass")
 	
 	Lib.create_text_popup("Like a\nshadow...", G.player.global_position + Vector2(1, -20), false, 3, true)
-	
-	AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/good3.wav"))
 	
 	G.human.freeze_a_bit()
 
