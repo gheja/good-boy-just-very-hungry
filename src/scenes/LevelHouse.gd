@@ -7,15 +7,13 @@ func _ready():
 	Lib.silence($PlayerTrackingTimer.connect("timeout", self, "on_player_tracking_timer_timeout"))
 
 func on_player_tracking_timer_timeout():
-	var player = Lib.get_player()
-	
 	if G.state != G.STATE_CHASE:
 		return
 	
 	var obj = Position2D.new()
 	
 	$RecentPlayerPositions.add_child(obj)
-	obj.global_position = player.global_position
+	obj.global_position = G.player.global_position
 
 func add_food():
 	# might be called multiple times

@@ -126,7 +126,6 @@ func update_target_position_normal():
 		target_position = positions[1].global_position
 
 func update_target_position_chase():
-	var player = Lib.get_player()
 	var positions = Lib.get_first_node_in_group("player_positions_container").get_children()
 	
 	if positions.size() > 0:
@@ -137,7 +136,7 @@ func update_target_position_chase():
 	if positions.size() > 0:
 		target_position = positions[0].global_position
 	else:
-		target_position = player.global_position
+		target_position = G.player.global_position
 
 func update_animation():
 	if abs(move_vector.x) > 10:
