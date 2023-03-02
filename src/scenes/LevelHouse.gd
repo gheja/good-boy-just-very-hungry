@@ -1,8 +1,5 @@
 extends Node2D
 
-const STATE_NORMAL = 0
-const STATE_CHASE = 1
-
 var the_food
 var the_meh_food
 
@@ -12,7 +9,7 @@ func _ready():
 func on_player_tracking_timer_timeout():
 	var player = Lib.get_player()
 	
-	if player.state != STATE_CHASE:
+	if G.state != G.STATE_CHASE:
 		return
 	
 	var obj = Position2D.new()

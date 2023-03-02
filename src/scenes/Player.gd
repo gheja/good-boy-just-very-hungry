@@ -2,12 +2,6 @@ extends KinematicBody2D
 
 signal reached
 
-const STATE_NORMAL = 0
-const STATE_CHASE = 1
-const STATE_BUSTED = 2
-const STATE_WON = 3
-const STATE_ATTEMPT = 4
-
 var direction = Vector2.LEFT
 var move_vector = Vector2.ZERO
 var facing_direction = Vector2.RIGHT
@@ -31,8 +25,6 @@ var in_nom_area = false
 var is_on_food = false
 var is_on_meh_food = false
 
-var state
-
 onready var sprite = $AnimatedSprite
 
 func _ready():
@@ -42,14 +34,14 @@ func _ready():
 	Lib.silence($ResumeTimer.connect("timeout", self, "on_resume_timer_timeout"))
 
 func _process(delta):
-	if state == STATE_ATTEMPT:
+	if G.state == G.STATE_ATTEMPT:
 		return
 	
-	if state == STATE_NORMAL or state == STATE_CHASE:
+	if G.state == G.STATE_NORMAL or G.state == G.STATE_CHASE:
 		process_normal_and_chase(delta)
-	elif state == STATE_BUSTED:
+	elif G.state == G.STATE_BUSTED:
 		process_busted(delta)
-	elif state == STATE_WON:
+	elif G.state == G.STATE_WON:
 		process_won(delta)
 	
 	if player_input_vector.x == 0:
@@ -93,18 +85,16 @@ func process_won(_delta):
 	player_input_vector = Vector2.ZERO
 	move_vector = Vector2.ZERO
 
-func set_state(new_state):
-	state = new_state
-	
+func set_state():
 	movement_paused = false
 	
-	if state == STATE_NORMAL:
+	if G.state == G.STATE_NORMAL:
 		speed = 25
-	elif state == STATE_CHASE:
+	elif G.state == G.STATE_CHASE:
 		speed = 50
-	elif state == STATE_BUSTED:
+	elif G.state == G.STATE_BUSTED:
 		speed = 0
-	elif state == STATE_WON:
+	elif G.state == G.STATE_WON:
 		speed = 0
 
 func update_animation():

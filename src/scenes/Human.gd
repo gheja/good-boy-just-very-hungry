@@ -3,12 +3,6 @@ extends KinematicBody2D
 signal target_reached
 signal seeing_the_player
 
-const STATE_NORMAL = 0
-const STATE_CHASE = 1
-const STATE_BUSTED = 2
-const STATE_WON = 3
-const STATE_ATTEMPT = 4
-
 var direction = Vector2.LEFT
 var move_vector = Vector2.ZERO
 var facing_direction = Vector2.LEFT
@@ -23,8 +17,6 @@ var intro_active = true
 
 var is_frozen = false
 
-var state
-
 func _ready():
 	target_position = global_position
 	Lib.silence($SecondTimer.connect("timeout", self, "on_second_timer_timeout"))
@@ -33,22 +25,21 @@ func _ready():
 	Lib.silence($SightLeftCollision.connect("area_exited", self, "on_sight_area_exited"))
 	Lib.silence($SightRightCollision.connect("area_entered", self, "on_sight_area_entered"))
 	Lib.silence($SightRightCollision.connect("area_exited", self, "on_sight_area_exited"))
-	set_state(STATE_NORMAL)
 
 func _process(delta):
-	if state == STATE_ATTEMPT:
+	if G.state == G.STATE_ATTEMPT:
 		return
 	
 	if is_frozen:
 		return
 	
-	if state == STATE_NORMAL:
+	if G.state == G.STATE_NORMAL:
 		process_normal(delta)
-	elif state == STATE_CHASE:
+	elif G.state == G.STATE_CHASE:
 		process_chase(delta)
-	elif state == STATE_BUSTED:
+	elif G.state == G.STATE_BUSTED:
 		process_busted(delta)
-	elif state == STATE_WON:
+	elif G.state == G.STATE_WON:
 		process_won(delta)
 	
 	move_vector = speed * direction
@@ -100,22 +91,20 @@ func process_busted(_delta):
 func process_won(_delta):
 	global_position = Lib.get_player().global_position + Vector2(-12, 0)
 
-func set_state(new_state):
-	state = new_state
-	
-	if state == STATE_NORMAL:
+func set_state():
+	if G.state == G.STATE_NORMAL:
 		speed = 10
 		intro_active = true
 		is_frozen = false
-	elif state == STATE_CHASE:
+	elif G.state == G.STATE_CHASE:
 		Lib.create_text_popup("Stop!", global_position + Vector2(0, -20), false, 1)
 		speed = 30
-	elif state == STATE_BUSTED:
+	elif G.state == G.STATE_BUSTED:
 		# just to move to the correct position
 		process_busted(0)
 		Lib.create_text_popup(Lib.random_pick([ "Got you!", "Almost!", "Nice try!", "Maybe\nnext time" ]), global_position + Vector2(0, -20), false, 1)
 		speed = 0
-	elif state == STATE_WON:
+	elif G.state == G.STATE_WON:
 		# just to move to the correct position
 		process_won(0)
 		Lib.create_text_popup(Lib.random_pick([ "Good one!", "Impressive." ]), global_position + Vector2(0, -20), false, 1)

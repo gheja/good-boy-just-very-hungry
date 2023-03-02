@@ -1,12 +1,5 @@
 extends Node
 
-const STATE_NORMAL = 0
-const STATE_CHASE = 1
-const STATE_BUSTED = 2
-const STATE_WON = 3
-const STATE_ATTEMPT = 4
-
-var state
 var sus_value = 0
 var food_bites_max = 80
 var food_bites_left = 0
@@ -23,6 +16,9 @@ func _ready():
 	randomize()
 
 func start():
+	G.update()
+	G.set_state(G.STATE_NORMAL)
+	
 	AudioManager.play_music(preload("res://data/music/main_based_on_mountain_man_by_avgvsta_on_opengameart.wav"))
 	
 	var player = Lib.get_player()
@@ -34,9 +30,6 @@ func start():
 	Lib.silence($WonTimer.connect("timeout", self, "on_won_timer_timeout"))
 	Lib.silence(ui.connect("action_pressed", self, "on_ui_action_pressed"))
 	Lib.silence($SecondTimer.connect("timeout", self, "on_second_timer_timeout"))
-	
-	set_state(STATE_NORMAL)
-	
 	start_intro()
 
 func finish_intro(reset_positions = false):
@@ -195,7 +188,7 @@ func add_score(value):
 	Lib.get_ui().update_score(score)
 
 func _process(delta):
-	if state == STATE_ATTEMPT:
+	if G.state == G.STATE_ATTEMPT:
 		process_attempt(delta)
 	
 	update_camera_position(delta)
@@ -211,10 +204,10 @@ func process_attempt(delta):
 		attempt_evaluate(true)
 
 func attempt_start():
-	set_state(STATE_ATTEMPT)
+	G.set_state(G.STATE_ATTEMPT)
 
 func attempt_evaluate(timed_out = false):
-	set_state(STATE_NORMAL)
+	G.set_state(G.STATE_NORMAL)
 	
 	if timed_out:
 		print("timeout")
@@ -262,7 +255,7 @@ func attempt_perfect_pass():
 	human.freeze_a_bit()
 
 func update_human_check():
-	if state != STATE_NORMAL:
+	if G.state != G.STATE_NORMAL:
 		return
 	
 	var human = Lib.get_human()
@@ -277,43 +270,37 @@ func update_human_check():
 		if took_the_food:
 			on_human_noticed()
 
-func set_state(new_state):
-	state = new_state
-	
-	if state == STATE_NORMAL:
-		# ui.set_gauge_text("Sus")
+func set_state():
+	if G.state == G.STATE_NORMAL:
 		sus_value = 0
 		food_bites_left = food_bites_max
 		took_the_food = false
 		ate_the_food = false
 		show_retry = false
 		score = 0
-	elif state == STATE_ATTEMPT:
+	elif G.state == G.STATE_ATTEMPT:
 		attempt_time_left = attempt_time_max
-	elif state == STATE_CHASE:
+	elif G.state == G.STATE_CHASE:
 		pass
-	elif state == STATE_BUSTED:
+	elif G.state == G.STATE_BUSTED:
 		if score > Lib.get_high_score():
 			Lib.save_high_score(score)
 		
 		$BustedTimer.start()
-	elif state == STATE_WON:
+	elif G.state == G.STATE_WON:
 		if score > Lib.get_high_score():
 			Lib.save_high_score(score)
 		
 		$WonTimer.start()
-	
-	Lib.get_player().set_state(state)
-	Lib.get_human().set_state(state)
 
 func on_player_reached():
-	if state != STATE_CHASE:
+	if G.state != G.STATE_CHASE:
 		return
 	
 	if food_bites_left > 0:
-		set_state(STATE_BUSTED)
+		G.set_state(G.STATE_BUSTED)
 	else:
-		set_state(STATE_WON)
+		G.set_state(G.STATE_WON)
 	
 	AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/good2.wav"))
 
@@ -376,7 +363,7 @@ func on_ui_action_pressed(action_code):
 func on_attempt_failed():
 	var human = Lib.get_human()
 	
-	set_state(STATE_CHASE)
+	G.set_state(G.STATE_CHASE)
 	human.turbo()
 	
 	AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/odd1.wav"))
@@ -386,8 +373,8 @@ func on_human_noticed():
 	
 	sus_value = 1.0
 	
-	if state == STATE_NORMAL:
-		set_state(STATE_CHASE)
+	if G.state == G.STATE_NORMAL:
+		G.set_state(G.STATE_CHASE)
 	
 	Lib.create_text_popup("Uh-oh!", player.global_position + Vector2(1, -20), false, 3, true)
 	
@@ -410,7 +397,7 @@ func update_ui():
 		
 		return
 	
-	if state == STATE_BUSTED or state == STATE_WON:
+	if G.state == G.STATE_BUSTED or G.state == G.STATE_WON:
 		ui.set_attempt(false)
 		ui.set_gauge_text("")
 		ui.set_gauge_value(0)
@@ -438,20 +425,20 @@ func update_ui():
 		else:
 			ui.set_gauge_text("")
 		
-		if state == STATE_CHASE:
+		if G.state == G.STATE_CHASE:
 			ui.set_actions(21, "Chew!", 21, "Chew faster!")
 		else:
 			ui.set_actions(21, "Chew!", 0, "")
 		return
 	
-	if state == STATE_ATTEMPT:
+	if G.state == G.STATE_ATTEMPT:
 		ui.set_gauge_text("Time")
 		ui.set_gauge_value(attempt_time_left / attempt_time_max)
 		ui.set_attempt(true)
 		ui.set_actions(5, "Grab!", 0, "")
 		return
 	
-	if state == STATE_NORMAL:
+	if G.state == G.STATE_NORMAL:
 		ui.set_gauge_text("Sus")
 		ui.set_gauge_value(sus_value)
 		ui.set_attempt(false)
@@ -467,19 +454,16 @@ func update_ui():
 				ui.set_actions(10, "Tail wag", 11, "Puppy eyes")
 
 func on_sus_changed(old_value, new_value):
-	if state != STATE_NORMAL:
+	if G.state != G.STATE_NORMAL:
 		return
 	
 	var human = Lib.get_human()
 	
 	if old_value != new_value:
 		human.on_sus_changed(old_value, new_value)
-	
-	# if new_value >= 1:
-	# 	set_state(STATE_CHASE)
 
 func on_sus_update_timer_timeout():
-	if state != STATE_NORMAL:
+	if G.state != G.STATE_NORMAL:
 		return
 	
 	var player = Lib.get_player()
@@ -508,6 +492,6 @@ func on_won_timer_timeout():
 	show_retry = true
 
 func on_second_timer_timeout():
-	if state == STATE_NORMAL or state == STATE_CHASE:
+	if G.state == G.STATE_NORMAL or G.state == G.STATE_CHASE:
 		if took_the_food:
 			add_score(50)
