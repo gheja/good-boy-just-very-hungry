@@ -277,15 +277,8 @@ func update_human_check():
 		if took_the_food:
 			on_human_noticed()
 
-
 func set_state(new_state):
-	# var ui = Lib.get_ui()
 	state = new_state
-	
-	# ui.set_attempt(false)
-	# ui.set_gauge_text("")
-	# ui.set_gauge_value(0)
-	# ui.set_actions(0, "", 0, "")
 	
 	if state == STATE_NORMAL:
 		# ui.set_gauge_text("Sus")
@@ -298,7 +291,6 @@ func set_state(new_state):
 	elif state == STATE_ATTEMPT:
 		attempt_time_left = attempt_time_max
 	elif state == STATE_CHASE:
-		# ui.set_actions(21, "Chew!", 21, "Chew faster!")
 		pass
 	elif state == STATE_BUSTED:
 		if score > Lib.get_high_score():
@@ -365,8 +357,6 @@ func on_ui_action_pressed(action_code):
 		add_score(150)
 		
 		Lib.create_text_popup(Lib.random_pick([ "nom", "tasty", "wow", "mmmm", "juicy", "delicious", "yummie", "yummy"]), player.global_position + Vector2(0, -15), true)
-		
-		# ui.set_gauge_value(food_bites_left / food_bites_max)
 		
 		if food_bites_left == 0:
 			player.set_food_in_mouth(false)
@@ -512,12 +502,9 @@ func on_sus_update_timer_timeout():
 	on_sus_changed(old_sus_value, sus_value)
 
 func on_busted_timer_timeout():
-	# Lib.get_ui().set_actions(30, "Next day", 31, "Exit")
 	show_retry = true
 
 func on_won_timer_timeout():
-	# Lib.get_ui().set_actions(30, "Next day", 31, "Exit")
-	# Lib.get_ui().set_actions(31, "Burp", 31, "Exit")
 	show_retry = true
 
 func on_second_timer_timeout():

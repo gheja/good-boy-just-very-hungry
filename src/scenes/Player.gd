@@ -7,9 +7,6 @@ const STATE_CHASE = 1
 const STATE_BUSTED = 2
 const STATE_WON = 3
 const STATE_ATTEMPT = 4
-const STATE2_NORMAL = 10
-const STATE2_PUPPY_EYES = 11
-const STATE2_WAGGING = 12
 
 var direction = Vector2.LEFT
 var move_vector = Vector2.ZERO
@@ -36,13 +33,10 @@ var is_on_food = false
 var is_on_meh_food = false
 
 var state
-var state2
 
 onready var sprite = $AnimatedSprite
 
 func _ready():
-	# set_state(STATE_NORMAL)
-	# set_state2(STATE2_NORMAL)
 	Lib.silence($HumanCollision.connect("area_entered", self, "on_human_collision_area_entered"))
 	Lib.silence($NomCollision.connect("area_entered", self, "on_nom_collision_area_entered"))
 	Lib.silence($NomCollision.connect("area_exited", self, "on_nom_collision_area_exited"))
@@ -106,8 +100,6 @@ func set_state(new_state):
 	
 	movement_paused = false
 	
-	set_state2(STATE2_NORMAL)
-	
 	if state == STATE_NORMAL:
 		speed = 25
 	elif state == STATE_CHASE:
@@ -116,9 +108,6 @@ func set_state(new_state):
 		speed = 0
 	elif state == STATE_WON:
 		speed = 0
-
-func set_state2(new_state2):
-	state2 = new_state2
 
 func update_animation():
 	if movement_paused:

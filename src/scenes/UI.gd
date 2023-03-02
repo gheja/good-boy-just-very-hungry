@@ -23,7 +23,6 @@ func _unhandled_input(event):
 func _process(_delta):
 	global_position = Vector2(-42, -24) + Lib.get_camera().global_position
 	
-	# attempt_n += 0.08
 	attempt_n += 0.06
 	attempt_position = pow(cos(attempt_n), 2)
 	

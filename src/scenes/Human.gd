@@ -52,11 +52,8 @@ func _process(delta):
 		process_won(delta)
 	
 	move_vector = speed * direction
-	# move_vector = speed * direction + gravity
 	
 	global_position += move_vector * delta
-	# move_vector = move_and_slide(move_vector)
-	
 	
 	if move_vector.x > 0.01 and facing_direction != Vector2.RIGHT:
 		facing_direction = Vector2.RIGHT
