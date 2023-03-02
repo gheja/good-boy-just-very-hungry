@@ -438,6 +438,12 @@ func update_ui():
 		G.ui.set_actions(5, "Grab!", 0, "")
 		return
 	
+	if G.state == G.STATE_ATTEMPT_RESULT:
+		G.ui.set_gauge_text("Food")
+		G.ui.set_gauge_value(1.0)
+		G.ui.set_actions(0, "", 0, "")
+		return
+	
 	if G.state == G.STATE_NORMAL:
 		G.ui.set_gauge_text("Sus")
 		G.ui.set_gauge_value(sus_value)
