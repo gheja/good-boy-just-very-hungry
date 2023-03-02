@@ -48,6 +48,9 @@ func set_gauge_text(text):
 func set_gauge_value(value):
 	$GaugeFilled.rect_size.x = clamp(value, 0, 1) * 64
 
+func attempt_start():
+	$AnimationPlayer.play("default")
+
 func set_attempt(value):
 	$ActionGroup.visible = value
 

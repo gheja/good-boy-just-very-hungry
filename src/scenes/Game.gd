@@ -198,6 +198,7 @@ func process_attempt(delta):
 
 func attempt_start():
 	G.set_state(G.STATE_ATTEMPT)
+	G.ui.attempt_start()
 
 func attempt_evaluate(timed_out = false):
 	G.set_state(G.STATE_NORMAL)
