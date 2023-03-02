@@ -15,7 +15,6 @@ var player_input_vector = Vector2.ZERO
 var player_just_pressed_jump = false
 var jumping = false
 var max_speed = 25
-# var speed = 25
 var speed = 55
 var jump_speed = 40
 var deceleration_n = 15
@@ -58,7 +57,6 @@ func _process(delta):
 	
 	move_vector += gravity * delta
 	
-	# global_position += move_vector * delta
 	move_vector = move_and_slide(move_vector, Vector2.UP)
 	
 	if is_on_floor():
