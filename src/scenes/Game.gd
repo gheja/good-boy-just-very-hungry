@@ -203,10 +203,6 @@ func attempt_start():
 func attempt_evaluate(timed_out = false):
 	G.set_state(G.STATE_NORMAL)
 	
-	if timed_out:
-		print("timeout")
-		return
-	
 	var food = Lib.get_first_node_in_group("foods")
 	
 	food.queue_free()
@@ -217,7 +213,9 @@ func attempt_evaluate(timed_out = false):
 	
 	add_score(500)
 	
-	if G.ui.is_attempt_perfect_pass():
+	if timed_out:
+		attempt_fail()
+	elif G.ui.is_attempt_perfect_pass():
 		add_score(2000)
 		attempt_perfect_pass()
 	elif G.ui.is_attempt_pass():
