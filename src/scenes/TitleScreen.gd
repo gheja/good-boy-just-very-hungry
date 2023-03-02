@@ -8,12 +8,12 @@ func _ready():
 	$AnimatedSprite.frame = 0
 	$StartTextContainer.visible = false
 	
-	$CreditsTimer.connect("timeout", self, "on_credits_timer_timeout")
-	$StartTextTimer.connect("timeout", self, "on_start_text_timer_timeout")
+	Lib.silence($CreditsTimer.connect("timeout", self, "on_credits_timer_timeout"))
+	Lib.silence($StartTextTimer.connect("timeout", self, "on_start_text_timer_timeout"))
 	
 	if not Lib.title_already_played:
 		$AnimatedSprite.play("default")
-		$AnimatedSprite.connect("animation_finished", self, "on_animation_finished")
+		Lib.silence($AnimatedSprite.connect("animation_finished", self, "on_animation_finished"))
 		$CreditsLabel.visible = false
 	else:
 		$AnimatedSprite.play("loop")
