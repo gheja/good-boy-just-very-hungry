@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 0.307786, 1 ),
 "update": 0,
-"values": [ Vector2( 85, 24 ), Vector2( 73, 24 ) ]
+"values": [ Vector2( 85, 23 ), Vector2( 73, 23 ) ]
 }
 
 [sub_resource type="SpriteFrames" id=1]
@@ -117,7 +117,7 @@ position = Vector2( 42, 24 )
 frames = SubResource( 1 )
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="ActionGroup"]
-position = Vector2( 85, 24 )
+position = Vector2( 85, 23 )
 frames = SubResource( 2 )
 
 [node name="SpriteAttemptArrow" type="Sprite" parent="ActionGroup"]
