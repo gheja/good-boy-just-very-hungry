@@ -25,6 +25,7 @@ config/icon="res://icon.png"
 
 AudioManager="*res://data/autoload/AudioManager.gd"
 Lib="*res://data/autoload/lib.gd"
+G="*res://data/autoload/g.gd"
 
 [debug]
 

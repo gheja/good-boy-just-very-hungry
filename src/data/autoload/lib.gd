@@ -48,6 +48,9 @@ func get_first_node_in_group(group_name):
 	
 	return objects[0]
 
+func get_game():
+	return get_first_node_in_group("games")
+
 func get_player():
 	return get_first_node_in_group("players")
 
