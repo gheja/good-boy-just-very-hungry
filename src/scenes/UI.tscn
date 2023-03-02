@@ -1,11 +1,30 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://data/sprites/interface_background.png" type="Texture" id=1]
 [ext_resource path="res://scenes/UI.gd" type="Script" id=2]
 [ext_resource path="res://data/sprites/interface_gauge.png" type="Texture" id=3]
+[ext_resource path="res://data/sprites/focus_player_1.png" type="Texture" id=4]
 [ext_resource path="res://data/themes/theme.tres" type="Theme" id=5]
-[ext_resource path="res://data/sprites/interface_attempt_bar.png" type="Texture" id=9]
+[ext_resource path="res://data/sprites/focus_1.png" type="Texture" id=6]
+[ext_resource path="res://data/sprites/focus_2.png" type="Texture" id=7]
+[ext_resource path="res://data/sprites/focus_player_2.png" type="Texture" id=8]
 [ext_resource path="res://data/sprites/interface_attempt_arrow.png" type="Texture" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
 
 [node name="UI" type="Node2D" groups=["uis"]]
 script = ExtResource( 2 )
@@ -23,14 +42,6 @@ size_flags_vertical = 0
 theme = ExtResource( 5 )
 text = "0"
 align = 2
-
-[node name="SpriteAttemptBar" type="Sprite" parent="."]
-position = Vector2( 42, 24 )
-texture = ExtResource( 9 )
-
-[node name="SpriteAttemptArrow" type="Sprite" parent="."]
-position = Vector2( 42, 9 )
-texture = ExtResource( 10 )
 
 [node name="SpriteGauge" type="Sprite" parent="."]
 position = Vector2( 42, 24 )
@@ -74,3 +85,25 @@ theme = ExtResource( 5 )
 text = "Right
 "
 align = 2
+
+[node name="ActionGroup" type="Node2D" parent="."]
+
+[node name="ColorRect2" type="ColorRect" parent="ActionGroup"]
+margin_right = 83.0
+margin_bottom = 35.0
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="ActionGroup"]
+position = Vector2( 42, 24 )
+frames = SubResource( 1 )
+frame = 1
+playing = true
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="ActionGroup"]
+position = Vector2( 73, 24 )
+frames = SubResource( 2 )
+frame = 1
+playing = true
+
+[node name="SpriteAttemptArrow" type="Sprite" parent="ActionGroup"]
+position = Vector2( 42, 5 )
+texture = ExtResource( 10 )

@@ -83,3 +83,7 @@ collision_mask = 8
 position = Vector2( 14, -6 )
 shape = SubResource( 5 )
 disabled = true
+
+[node name="FreezeTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

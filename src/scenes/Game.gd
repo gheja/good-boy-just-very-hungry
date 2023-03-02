@@ -4,6 +4,7 @@ const STATE_NORMAL = 0
 const STATE_CHASE = 1
 const STATE_BUSTED = 2
 const STATE_WON = 3
+const STATE_ATTEMPT = 4
 
 var state
 var sus_value = 0
@@ -14,6 +15,9 @@ var took_the_food = false
 var ate_the_food = false
 var show_retry = false
 var score = 0
+
+var attempt_time_left = 0.0
+var attempt_time_max = 4.0
 
 func _ready():
 	randomize()
@@ -191,15 +195,80 @@ func add_score(value):
 	Lib.get_ui().update_score(score)
 
 func _process(delta):
+	if state == STATE_ATTEMPT:
+		process_attempt(delta)
+	
 	update_camera_position(delta)
 	update_ui()
 	update_human_check()
+
+func process_attempt(delta):
+	if attempt_time_left > 0:
+		attempt_time_left -= delta
+	
+	if attempt_time_left <= 0:
+		# auto fail
+		attempt_evaluate(true)
+
+func attempt_start():
+	set_state(STATE_ATTEMPT)
+
+func attempt_evaluate(timed_out = false):
+	set_state(STATE_NORMAL)
+	
+	if timed_out:
+		print("timeout")
+		return
+	
+	var player = Lib.get_player()
+	var food = Lib.get_first_node_in_group("foods")
+	var ui = Lib.get_ui()
+	
+	food.queue_free()
+	
+	took_the_food = true
+	
+	player.set_food_in_mouth(true)
+	
+	add_score(500)
+	
+	if ui.is_attempt_perfect_pass():
+		add_score(2000)
+		attempt_perfect_pass()
+	elif ui.is_attempt_pass():
+		add_score(500)
+		attempt_pass()
+	else:
+		attempt_fail()
+
+func attempt_fail():
+	print("fail")
+	on_human_noticed()
+	on_attempt_failed()
+
+func attempt_pass():
+	print("pass")
+	pass
+
+func attempt_perfect_pass():
+	print("perfect pass")
+	var player = Lib.get_player()
+	var human = Lib.get_human()
+	
+	Lib.create_text_popup("Like a\nshadow...", player.global_position + Vector2(1, -20), false, 3, true)
+	
+	AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/good3.wav"))
+	
+	human.freeze_a_bit()
 
 func update_human_check():
 	if state != STATE_NORMAL:
 		return
 	
 	var human = Lib.get_human()
+	
+	if human.is_frozen:
+		return
 	
 	if human.can_see_the_table and took_the_food:
 		on_human_noticed()
@@ -226,6 +295,8 @@ func set_state(new_state):
 		ate_the_food = false
 		show_retry = false
 		score = 0
+	elif state == STATE_ATTEMPT:
+		attempt_time_left = attempt_time_max
 	elif state == STATE_CHASE:
 		# ui.set_actions(21, "Chew!", 21, "Chew faster!")
 		pass
@@ -276,24 +347,10 @@ func on_ui_action_pressed(action_code):
 		AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/blip14.wav"))
 		
 	elif action_code == 4:
-		var food = Lib.get_first_node_in_group("foods")
-		food.queue_free()
+		attempt_start()
 		
-		took_the_food = true
-		
-		player.set_food_in_mouth(true)
-		
-		# ui.set_gauge_text("Food")
-		# ui.set_gauge_value(0)
-		
-		add_score(500)
-		
-		if ui.is_attempt_successful():
-			add_score(2000)
-			on_attempt_succeeded()
-		else:
-			on_human_noticed()
-			on_attempt_failed()
+	elif action_code == 5:
+		attempt_evaluate()
 		
 	elif action_code == 10:
 		player.do_tail_wag()
@@ -325,13 +382,6 @@ func on_ui_action_pressed(action_code):
 		
 	elif action_code == 31:
 		reset_to_title_screen()
-
-func on_attempt_succeeded():
-	var player = Lib.get_player()
-	
-	Lib.create_text_popup("Like a\nshadow...", player.global_position + Vector2(1, -20), false, 3, true)
-	
-	AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/good3.wav"))
 
 func on_attempt_failed():
 	var human = Lib.get_human()
@@ -404,19 +454,23 @@ func update_ui():
 			ui.set_actions(21, "Chew!", 0, "")
 		return
 	
+	if state == STATE_ATTEMPT:
+		ui.set_gauge_text("Time")
+		ui.set_gauge_value(attempt_time_left / attempt_time_max)
+		ui.set_attempt(true)
+		ui.set_actions(5, "Grab!", 0, "")
+		return
+	
 	if state == STATE_NORMAL:
 		ui.set_gauge_text("Sus")
 		ui.set_gauge_value(sus_value)
+		ui.set_attempt(false)
 		
 		if player.is_on_food and sus_value < 1:
-			ui.set_attempt(true)
-			ui.set_actions(4, "Grab!", 0, "")
+			ui.set_actions(4, "Focus!", 0, "")
 		elif player.is_on_meh_food:
-			ui.set_attempt(false)
 			ui.set_actions(3, "Eat food", 0, "")
 		else:
-			ui.set_attempt(false)
-			
 			if sus_value == 0:
 				ui.set_actions(0, "", 0, "")
 			else:
@@ -441,6 +495,9 @@ func on_sus_update_timer_timeout():
 	var player = Lib.get_player()
 	var human = Lib.get_human()
 	var old_sus_value = sus_value
+	
+	if human.is_frozen:
+		return
 	
 	if human.can_see_the_player:
 		if player.in_nom_area:

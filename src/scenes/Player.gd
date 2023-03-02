@@ -6,6 +6,7 @@ const STATE_NORMAL = 0
 const STATE_CHASE = 1
 const STATE_BUSTED = 2
 const STATE_WON = 3
+const STATE_ATTEMPT = 4
 const STATE2_NORMAL = 10
 const STATE2_PUPPY_EYES = 11
 const STATE2_WAGGING = 12
@@ -48,6 +49,9 @@ func _ready():
 	Lib.silence($ResumeTimer.connect("timeout", self, "on_resume_timer_timeout"))
 
 func _process(delta):
+	if state == STATE_ATTEMPT:
+		return
+	
 	if state == STATE_NORMAL or state == STATE_CHASE:
 		process_normal_and_chase(delta)
 	elif state == STATE_BUSTED:

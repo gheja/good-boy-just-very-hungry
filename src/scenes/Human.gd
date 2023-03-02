@@ -7,6 +7,7 @@ const STATE_NORMAL = 0
 const STATE_CHASE = 1
 const STATE_BUSTED = 2
 const STATE_WON = 3
+const STATE_ATTEMPT = 4
 
 var direction = Vector2.LEFT
 var move_vector = Vector2.ZERO
@@ -20,11 +21,14 @@ var can_see_the_player = false
 var can_see_the_table = false
 var intro_active = true
 
+var is_frozen = false
+
 var state
 
 func _ready():
 	target_position = global_position
 	Lib.silence($SecondTimer.connect("timeout", self, "on_second_timer_timeout"))
+	Lib.silence($FreezeTimer.connect("timeout", self, "on_freeze_timer_timeout"))
 	Lib.silence($SightLeftCollision.connect("area_entered", self, "on_sight_area_entered"))
 	Lib.silence($SightLeftCollision.connect("area_exited", self, "on_sight_area_exited"))
 	Lib.silence($SightRightCollision.connect("area_entered", self, "on_sight_area_entered"))
@@ -32,6 +36,12 @@ func _ready():
 	set_state(STATE_NORMAL)
 
 func _process(delta):
+	if state == STATE_ATTEMPT:
+		return
+	
+	if is_frozen:
+		return
+	
 	if state == STATE_NORMAL:
 		process_normal(delta)
 	elif state == STATE_CHASE:
@@ -99,6 +109,7 @@ func set_state(new_state):
 	if state == STATE_NORMAL:
 		speed = 10
 		intro_active = true
+		is_frozen = false
 	elif state == STATE_CHASE:
 		Lib.create_text_popup("Stop!", global_position + Vector2(0, -20), false, 1)
 		speed = 30
@@ -191,3 +202,11 @@ func on_intro_finished():
 
 func turbo():
 	speed = 50
+
+func freeze_a_bit():
+	is_frozen = true
+	$AnimatedSprite.play("surprised")
+	$FreezeTimer.start()
+
+func on_freeze_timer_timeout():
+	is_frozen = false
