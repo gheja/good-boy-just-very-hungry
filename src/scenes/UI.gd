@@ -76,7 +76,7 @@ func set_attempt(value):
 	$ActionGroup.visible = value
 
 func is_attempt_pass():
-	if attempt_position > 0.3 and attempt_position < 0.7:
+	if attempt_position > 0.24 and attempt_position < 0.76:
 		return true
 	
 	return false
