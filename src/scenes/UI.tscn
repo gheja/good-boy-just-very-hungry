@@ -95,13 +95,10 @@ margin_bottom = 35.0
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ActionGroup"]
 position = Vector2( 42, 24 )
 frames = SubResource( 1 )
-frame = 1
-playing = true
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="ActionGroup"]
 position = Vector2( 73, 24 )
 frames = SubResource( 2 )
-playing = true
 
 [node name="SpriteAttemptArrow" type="Sprite" parent="ActionGroup"]
 position = Vector2( 42, 5 )

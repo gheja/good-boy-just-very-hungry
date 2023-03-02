@@ -13,6 +13,8 @@ func _ready():
 	attempt_n = 0
 	
 	$ActionGroup.visible = false
+	$ActionGroup/AnimatedSprite.play("default")
+	$ActionGroup/AnimatedSprite2.play("default")
 
 func _unhandled_input(event):
 	if event.is_action_pressed("action_left"):
