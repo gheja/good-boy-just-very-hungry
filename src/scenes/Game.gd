@@ -213,15 +213,19 @@ func attempt_evaluate(timed_out = false):
 	if timed_out:
 		result = 1
 		G.ui.attempt_fail()
+		AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/blip3.wav"))
 	elif G.ui.is_attempt_perfect_pass():
 		result = 2
 		G.ui.attempt_perfect_pass()
+		AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/good3.wav"))
 	elif G.ui.is_attempt_pass():
 		result = 3
 		G.ui.attempt_pass()
+		AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/blip1.wav"))
 	else:
 		result = 4
 		G.ui.attempt_fail()
+		AudioManager.play_sfx(preload("res://data/sfx/nokia_soundpack_@trix/blip3.wav"))
 	
 	yield(get_tree().create_timer(1.0), "timeout")
 	
