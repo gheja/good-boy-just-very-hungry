@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://data/sprites/interface_background.png" type="Texture" id=1]
 [ext_resource path="res://scenes/UI.gd" type="Script" id=2]
@@ -8,7 +8,11 @@
 [ext_resource path="res://data/sprites/focus_1.png" type="Texture" id=6]
 [ext_resource path="res://data/sprites/focus_2.png" type="Texture" id=7]
 [ext_resource path="res://data/sprites/focus_player_2.png" type="Texture" id=8]
+[ext_resource path="res://data/sprites/focus_result_perfect_pass.png" type="Texture" id=9]
 [ext_resource path="res://data/sprites/interface_attempt_arrow.png" type="Texture" id=10]
+[ext_resource path="res://data/sprites/focus_run.png" type="Texture" id=11]
+[ext_resource path="res://data/sprites/focus_result_fail.png" type="Texture" id=12]
+[ext_resource path="res://data/sprites/focus_result_pass.png" type="Texture" id=13]
 
 [sub_resource type="Animation" id=3]
 resource_name = "default"
@@ -123,3 +127,23 @@ frames = SubResource( 2 )
 [node name="SpriteAttemptArrow" type="Sprite" parent="ActionGroup"]
 position = Vector2( 42, 5 )
 texture = ExtResource( 10 )
+
+[node name="ResultPassSprite" type="Sprite" parent="ActionGroup"]
+visible = false
+position = Vector2( 42, 24 )
+texture = ExtResource( 13 )
+
+[node name="ResultPerfectPassSprite" type="Sprite" parent="ActionGroup"]
+visible = false
+position = Vector2( 42, 24 )
+texture = ExtResource( 9 )
+
+[node name="ResultFailSprite" type="Sprite" parent="ActionGroup"]
+visible = false
+position = Vector2( 42, 24 )
+texture = ExtResource( 12 )
+
+[node name="RunSprite" type="Sprite" parent="ActionGroup"]
+visible = false
+position = Vector2( 42, 24 )
+texture = ExtResource( 11 )

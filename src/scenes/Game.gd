@@ -201,6 +201,33 @@ func attempt_start():
 	G.ui.attempt_start()
 
 func attempt_evaluate(timed_out = false):
+	var result
+	
+	if G.state != G.STATE_ATTEMPT:
+		return
+	
+	G.set_state(G.STATE_ATTEMPT_RESULT)
+	
+	add_score(500)
+	
+	if timed_out:
+		result = 1
+		G.ui.attempt_fail()
+	elif G.ui.is_attempt_perfect_pass():
+		result = 2
+		G.ui.attempt_perfect_pass()
+	elif G.ui.is_attempt_pass():
+		result = 3
+		G.ui.attempt_pass()
+	else:
+		result = 4
+		G.ui.attempt_fail()
+	
+	yield(get_tree().create_timer(1.0), "timeout")
+	
+	G.ui.attempt_run()
+	yield(get_tree().create_timer(1.0), "timeout")
+	
 	G.set_state(G.STATE_NORMAL)
 	
 	var food = Lib.get_first_node_in_group("foods")
@@ -211,17 +238,15 @@ func attempt_evaluate(timed_out = false):
 	
 	G.player.set_food_in_mouth(true)
 	
-	add_score(500)
-	
-	if timed_out:
+	if result == 1:
 		attempt_fail()
-	elif G.ui.is_attempt_perfect_pass():
+	elif result == 2:
 		add_score(2000)
 		attempt_perfect_pass()
-	elif G.ui.is_attempt_pass():
+	elif result == 3:
 		add_score(500)
 		attempt_pass()
-	else:
+	elif result == 4:
 		attempt_fail()
 
 func attempt_fail():
@@ -230,7 +255,6 @@ func attempt_fail():
 	on_attempt_failed()
 
 func attempt_pass():
-	print("pass")
 	pass
 
 func attempt_perfect_pass():

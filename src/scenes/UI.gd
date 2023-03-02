@@ -22,9 +22,13 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("action_right"):
 		emit_signal("action_pressed", current_action_right_code)
 
-func _process(_delta):
+func _process(delta):
 	global_position = Vector2(-42, -24) + Lib.get_camera().global_position
 	
+	if G.state != G.STATE_ATTEMPT_RESULT:
+		process_attempt(delta)
+
+func process_attempt(delta):
 	attempt_n += 0.06
 	attempt_position = pow(cos(attempt_n), 2)
 	
@@ -49,7 +53,24 @@ func set_gauge_value(value):
 	$GaugeFilled.rect_size.x = clamp(value, 0, 1) * 64
 
 func attempt_start():
+	$ActionGroup/ResultPassSprite.visible = false
+	$ActionGroup/ResultPerfectPassSprite.visible = false
+	$ActionGroup/ResultFailSprite.visible = false
+	$ActionGroup/RunSprite.visible = false
+	
 	$AnimationPlayer.play("default")
+
+func attempt_pass():
+	$ActionGroup/ResultPassSprite.visible = true
+
+func attempt_perfect_pass():
+	$ActionGroup/ResultPerfectPassSprite.visible = true
+
+func attempt_fail():
+	$ActionGroup/ResultFailSprite.visible = true
+
+func attempt_run():
+	$ActionGroup/RunSprite.visible = true
 
 func set_attempt(value):
 	$ActionGroup.visible = value

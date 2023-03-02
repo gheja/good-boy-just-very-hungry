@@ -5,6 +5,7 @@ const STATE_CHASE = 1
 const STATE_BUSTED = 2
 const STATE_WON = 3
 const STATE_ATTEMPT = 4
+const STATE_ATTEMPT_RESULT = 5
 
 var game
 var player
