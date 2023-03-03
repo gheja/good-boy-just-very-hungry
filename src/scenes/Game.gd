@@ -92,7 +92,7 @@ func start_intro():
 	if not intro_active:
 		return
 	
-	Lib.create_text_popup("For you...", G.human.global_position + Vector2(1, -20), false, 1)
+	Lib.create_text_popup("This is\nfor you...", G.human.global_position + Vector2(1, -20), false, 1)
 	yield(get_tree().create_timer(1.0), "timeout")
 	if not intro_active:
 		return
