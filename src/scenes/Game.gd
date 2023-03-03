@@ -452,7 +452,7 @@ func update_ui():
 		G.ui.set_gauge_value(sus_value)
 		G.ui.set_attempt(false)
 		
-		if G.player.is_on_food and sus_value < 1:
+		if G.player.is_on_food and sus_value == 0:
 			G.ui.set_actions(4, "Focus!", 0, "")
 		elif G.player.is_on_meh_food:
 			G.ui.set_actions(3, "Eat food", 0, "")
