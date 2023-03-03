@@ -486,6 +486,8 @@ func on_sus_update_timer_timeout():
 		elif G.player.in_warn2_area:
 			sus_value += 0.1
 	
+	sus_value -= 0.01
+	
 	sus_value = clamp(sus_value, 0, 1)
 	
 	on_sus_changed(old_sus_value, sus_value)
