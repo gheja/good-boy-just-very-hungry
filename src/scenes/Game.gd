@@ -473,6 +473,9 @@ func on_sus_update_timer_timeout():
 	if G.state != G.STATE_NORMAL:
 		return
 	
+	if intro_active:
+		return
+	
 	var old_sus_value = sus_value
 	
 	if G.human.is_frozen:
