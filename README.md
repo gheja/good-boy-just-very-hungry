@@ -1,10 +1,12 @@
 # Good Boy... just very hungry
 
-![Title screen of the game](misc/itch_io_cover_image.png)
+![Title screen of the game](misc/itch_io_cover_image_v3_updated_v3.png)
 
-A game made for the [Nokia 3310 Jam 5](https://itch.io/jam/nokiajam5).
+A game originally made for the [Nokia 3310 Jam 5](https://itch.io/jam/nokiajam5), but updated a bit later. See the jam version in the [nokia-3310-jam-entry](https://github.com/gheja/good-boy-just-very-hungry/tree/nokia-3310-jam-entry) branch.
 
-Play it on itch.io: https://gheja.itch.io/good-boy-just-very-hungry
+Play it on itch.io: https://gheja.itch.io/good-boy-just-very-hungry-latest
+
+Play the jam version on itch.io: https://gheja.itch.io/good-boy-just-very-hungry
 
 I made this game over the course of about 4 days, and this is my first real Godot game, it shows on the code, I am aware of it.
 
@@ -34,3 +36,7 @@ The game is made in Godot, using the great template by Trix on the [Nokia 3310 J
 ![A screenshot of the game](misc/screenshot_3.png)
 
 ![A screenshot of the game](misc/screenshot_4.png)
+
+![A screenshot of the game](misc/screenshot_5.png)
+
+![A screenshot of the game](misc/screenshot_6.png)
