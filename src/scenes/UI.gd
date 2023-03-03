@@ -31,8 +31,8 @@ func _process(delta):
 func process_attempt(delta):
 	attempt_n += 0.06
 	attempt_position = pow(cos(attempt_n), 2)
+	$ActionGroup/SpriteAttemptArrow.position.x = 7 + attempt_position * 72
 	
-	$ActionGroup/SpriteAttemptArrow.position.x = 9 + attempt_position * 67
 
 func set_actions(action_left_code, action_left_text, action_right_code, action_right_text):
 	current_action_left_code = action_left_code
@@ -76,13 +76,13 @@ func set_attempt(value):
 	$ActionGroup.visible = value
 
 func is_attempt_pass():
-	if attempt_position > 0.24 and attempt_position < 0.76:
+	if attempt_position > 0.27 and attempt_position < 0.73:
 		return true
 	
 	return false
 
 func is_attempt_perfect_pass():
-	if attempt_position > 0.43 and attempt_position < 0.57:
+	if attempt_position > 0.44 and attempt_position < 0.56:
 		return true
 	
 	return false
