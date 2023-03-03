@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://data/sprites/title_screen_5.png" type="Texture" id=1]
 [ext_resource path="res://data/sprites/title_screen_6.png" type="Texture" id=2]
@@ -17,15 +17,13 @@
 [ext_resource path="res://data/sprites/title_screen_4.png" type="Texture" id=15]
 [ext_resource path="res://data/sprites/title_screen_1.png" type="Texture" id=16]
 [ext_resource path="res://data/sprites/title_screen_10.png" type="Texture" id=17]
-[ext_resource path="res://data/sprites/title_screen_12.png" type="Texture" id=18]
 [ext_resource path="res://data/sprites/title_screen_13.png" type="Texture" id=19]
-[ext_resource path="res://data/sprites/title_screen_11.png" type="Texture" id=20]
 [ext_resource path="res://scenes/TitleScreen.gd" type="Script" id=21]
 [ext_resource path="res://data/themes/theme.tres" type="Theme" id=22]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 16 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"frames": [ ExtResource( 16 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 17 ), ExtResource( 19 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": true,
 "name": "default",
 "speed": 2.0
@@ -49,7 +47,7 @@ margin_bottom = 23.0
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -2, -1 )
 frames = SubResource( 1 )
-frame = 19
+frame = 17
 
 [node name="CreditsLabel" type="Label" parent="."]
 margin_left = -44.0
