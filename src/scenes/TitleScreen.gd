@@ -39,7 +39,7 @@ func on_credits_timer_timeout():
 	if text_step == 0:
 		$CreditsLabel.text = "Best score:\n" + str(Lib.get_high_score())
 	elif text_step == 1:
-		$CreditsLabel.text = "Sounds:\ntrix"
+		$CreditsLabel.text = "Sounds:\nTrix"
 	elif text_step == 2:
 		$CreditsLabel.text = "Music:\nAvgvsta, gheja"
 	elif text_step == 3:
